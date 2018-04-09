@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using UnityEngine.EventSystems;
 using UnityEngine;
 
 public class CharacterMovementControl : MonoBehaviour {
@@ -21,6 +20,11 @@ public class CharacterMovementControl : MonoBehaviour {
 
 
     void Update () {
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
+
         AnimatorSpeed = 0;
         move = Vector3.zero;
         float h = Input.GetAxis("Horizontal");
@@ -28,6 +32,8 @@ public class CharacterMovementControl : MonoBehaviour {
         main_camForward = Vector3.Scale(main_cam.forward, new Vector3(1, 0, 1)).normalized;
         move.Set(h * move_speed, 0f, v * move_speed);
         move = Vector3.ClampMagnitude(move, move_speed);
+        if (Input.GetMouseButtonDown(0))
+            anim.SetTrigger("Kick");
         if (Input.GetKey(KeyCode.Space))
         {
             anim.SetTrigger("jump");

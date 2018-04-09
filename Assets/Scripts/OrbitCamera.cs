@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using UnityEngine.EventSystems;
 public class OrbitCamera : MonoBehaviour
 {
     [SerializeField]
@@ -23,8 +23,12 @@ public class OrbitCamera : MonoBehaviour
     }
     void LateUpdate()
     {
-       
-         _rotY += Input.GetAxis("Mouse X") * rotSpeed * 3; 
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
+
+        _rotY += Input.GetAxis("Mouse X") * rotSpeed * 3; 
          _rotX -= Input.GetAxis("Mouse Y") * rotSpeed * 3;
         _rotX = Mathf.Clamp(_rotX, minVert, maxVert); //ограничиваем поворот камеры вокруг оси Х
         Quaternion rotation = Quaternion.Euler(_rotX, _rotY, 0);

@@ -6,7 +6,7 @@ public class Mini_map_camera : MonoBehaviour {
 
     public Transform player;
     public Transform main_camera;
-    float rotationspeed = 3f;
+    public float rotationspeed = 10f;
 
     private void LateUpdate()
     {
